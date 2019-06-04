@@ -57,15 +57,15 @@ app.post('/usuario', [verificaToken, verificaAdmin_Role], function(req, res) {
         role: body.role
     });
 
+
     usuario.save((err, usuarioDB) => {
+
         if (err) {
             return res.status(400).json({
                 ok: false,
                 err
             });
         }
-
-        // usuarioDB.password = null;
 
         res.json({
             ok: true,
@@ -100,13 +100,15 @@ app.put('/usuario/:id', [verificaToken, verificaAdmin_Role], function(req, res) 
 
 app.delete('/usuario/:id', [verificaToken, verificaAdmin_Role], function(req, res) {
 
+
     let id = req.params.id;
+
+    // Usuario.findByIdAndRemove(id, (err, usuarioBorrado) => {
 
     let cambiaEstado = {
         estado: false
     }
 
-    // Usuario.findByIdAndRemove(id, (err, usuarioBorrado) => {
     Usuario.findByIdAndUpdate(id, cambiaEstado, { new: true }, (err, usuarioBorrado) => {
 
         if (err) {
